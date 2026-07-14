@@ -19,7 +19,7 @@ A Flask-based web application for managing trekking activities, with three roles
 
 3. Run the application:
    ```
-   python app.py
+   python run.py
    ```
 
 4. Open your browser and go to:
