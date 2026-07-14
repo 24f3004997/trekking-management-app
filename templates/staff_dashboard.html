@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row">
+    {% include 'staff_sidebar.html' %}
+
+    <div class="col-md-10">
+        <h3>My Dashboard</h3>
+
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <div class="border rounded p-3 text-center">
+                    <h6>Assigned Treks</h6>
+                    <h3>{{ my_treks|length }}</h3>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="border rounded p-3 text-center">
+                    <h6>Total Participants</h6>
+                    <h3>{{ total_participants }}</h3>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="border rounded p-3 text-center">
+                    <h6>Open Treks</h6>
+                    <h3>{{ open_treks }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <h5 class="mt-4">My Assigned Treks</h5>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Trek Name</th>
+                    <th>Location</th>
+                    <th>Slots</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for t in my_treks %}
+                <tr>
+                    <td>{{ t.name }}</td>
+                    <td>{{ t.location }}</td>
+                    <td>{{ t.available_slots }}</td>
+                    <td>{{ t.status }}</td>
+                    <td>
+                        <a href="{{ url_for('staff_manage_trek', trek_id=t.id) }}" class="btn btn-sm btn-primary">Manage</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

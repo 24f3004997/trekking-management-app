@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row">
+    {% include 'user_sidebar.html' %}
+
+    <div class="col-md-10">
+        <h3>Welcome, {{ session.get('name') }}!</h3>
+
+        <h5 class="mt-4">Available Treks</h5>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Trek Name</th>
+                    <th>Location</th>
+                    <th>Difficulty</th>
+                    <th>Duration</th>
+                    <th>Available Slots</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for t in available_treks %}
+                <tr>
+                    <td>{{ t.name }}</td>
+                    <td>{{ t.location }}</td>
+                    <td>{{ t.difficulty }}</td>
+                    <td>{{ t.duration_days }} Days</td>
+                    <td>{{ t.available_slots }}</td>
+                    <td>
+                        <a href="{{ url_for('user_trek_details', trek_id=t.id) }}" class="btn btn-sm btn-primary">Book Now</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h5 class="mt-4">My Bookings</h5>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Trek Name</th>
+                    <th>Booking Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for b in my_bookings %}
+                <tr>
+                    <td>{{ b.trek.name }}</td>
+                    <td>{{ b.booking_date.strftime('%d %b %Y') }}</td>
+                    <td>{{ b.status }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

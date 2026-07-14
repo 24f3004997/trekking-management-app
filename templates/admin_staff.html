@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+    {% include 'admin_sidebar.html' %}
+    <div class="col-md-10 p-4">
+        <h3>Staff Requests</h3>
+        <h5 class="mt-4">Pending ({{ pending_staff|length }})</h5>
+        <table class="table table-bordered table-hover">
+            <thead><tr><th>Staff ID</th><th>Name</th><th>Email</th><th>Contact</th><th>Action</th></tr></thead>
+            <tbody>
+                {% for s in pending_staff %}
+                <tr><td>{{ loop.index }}</td><td>{{ s.name }}</td><td>{{ s.email }}</td><td>{{ s.contact }}</td>
+                <td><a href="{{ url_for('admin_approve_staff', staff_id=s.id) }}" class="btn btn-sm btn-success">Approve</a>
+                <a href="{{ url_for('admin_reject_staff', staff_id=s.id) }}" class="btn btn-sm btn-danger">Reject</a></td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h5 class="mt-4">Approved ({{ approved_staff|length }})</h5>
+        <table class="table table-bordered table-hover">
+            <thead><tr><th>Staff ID</th><th>Name</th><th>Email</th><th>Contact</th><th>Action</th></tr></thead>
+            <tbody>
+                {% for s in approved_staff %}
+                <tr><td>{{ loop.index }}</td><td>{{ s.name }}</td><td>{{ s.email }}</td><td>{{ s.contact }}</td>
+                <td><a href="{{ url_for('admin_blacklist_staff', staff_id=s.id) }}" class="btn btn-sm btn-danger">Blacklist</a></td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h5 class="mt-4">Blacklisted ({{ blacklisted_staff|length }})</h5>
+        <table class="table table-bordered table-hover">
+            <thead><tr><th>Staff ID</th><th>Name</th><th>Email</th></tr></thead>
+            <tbody>
+                {% for s in blacklisted_staff %}
+                <tr><td>{{ loop.index }}</td><td>{{ s.name }}</td><td>{{ s.email }}</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

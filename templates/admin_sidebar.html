@@ -1,0 +1,11 @@
+<div class="col-md-2 bg-light border-end p-3" style="min-height: 100vh;">
+    <ul class="nav nav-pills flex-column gap-1">
+        <li class="nav-item"><a href="{{ url_for('admin_dashboard') }}" class="nav-link {% if request.endpoint == 'admin_dashboard' %}active{% else %}text-dark{% endif %}">Dashboard</a></li>
+        <li class="nav-item"><a href="{{ url_for('admin_treks') }}" class="nav-link {% if request.endpoint in ['admin_treks', 'admin_add_trek', 'admin_edit_trek'] %}active{% else %}text-dark{% endif %}">Treks</a></li>
+        <li class="nav-item"><a href="{{ url_for('admin_staff') }}" class="nav-link {% if request.endpoint == 'admin_staff' %}active{% else %}text-dark{% endif %}">Staff</a></li>
+        <li class="nav-item"><a href="{{ url_for('admin_users') }}" class="nav-link {% if request.endpoint == 'admin_users' %}active{% else %}text-dark{% endif %}">Users</a></li>
+        <li class="nav-item"><a href="{{ url_for('admin_bookings') }}" class="nav-link {% if request.endpoint == 'admin_bookings' %}active{% else %}text-dark{% endif %}">Bookings</a></li>
+        <li class="nav-item"><a href="{{ url_for('admin_search') }}" class="nav-link {% if request.endpoint == 'admin_search' %}active{% else %}text-dark{% endif %}">Search</a></li>
+        <li class="nav-item"><a href="{{ url_for('logout') }}" class="nav-link text-dark">Logout</a></li>
+    </ul>
+</div>

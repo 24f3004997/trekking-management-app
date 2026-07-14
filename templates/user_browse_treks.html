@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row">
+    {% include 'user_sidebar.html' %}
+
+    <div class="col-md-10">
+        <h3>Browse Treks</h3>
+
+        <form method="GET" class="row mb-3">
+            <div class="col-md-4">
+                <select name="difficulty" class="form-control">
+                    <option value="">Difficulty: All</option>
+                    <option value="Easy" {% if request.args.get('difficulty') == 'Easy' %}selected{% endif %}>Easy</option>
+                    <option value="Moderate" {% if request.args.get('difficulty') == 'Moderate' %}selected{% endif %}>Moderate</option>
+                    <option value="Hard" {% if request.args.get('difficulty') == 'Hard' %}selected{% endif %}>Hard</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <select name="location" class="form-control">
+                    <option value="">Location: All</option>
+                    {% for loc in all_locations %}
+                    <option value="{{ loc[0] }}" {% if request.args.get('location') == loc[0] %}selected{% endif %}>{{ loc[0] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-primary">Filter</button>
+            </div>
+        </form>
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Trek Name</th>
+                    <th>Location</th>
+                    <th>Difficulty</th>
+                    <th>Duration</th>
+                    <th>Slots</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for t in treks %}
+                <tr>
+                    <td>{{ t.name }}</td>
+                    <td>{{ t.location }}</td>
+                    <td>{{ t.difficulty }}</td>
+                    <td>{{ t.duration_days }} Days</td>
+                    <td>{{ t.available_slots }}</td>
+                    <td>
+                        <a href="{{ url_for('user_trek_details', trek_id=t.id) }}" class="btn btn-sm btn-primary">Book Now</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

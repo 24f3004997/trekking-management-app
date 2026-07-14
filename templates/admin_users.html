@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+    {% include 'admin_sidebar.html' %}
+    <div class="col-md-10 p-4">
+        <h3>Users</h3>
+        <table class="table table-bordered table-hover mt-3">
+            <thead><tr><th>User ID</th><th>Name</th><th>Email</th><th>Contact</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody>
+                {% for u in users %}
+                <tr>
+                    <td>{{ loop.index }}</td><td>{{ u.name }}</td><td>{{ u.email }}</td><td>{{ u.contact }}</td>
+                    <td>{{ 'Blacklisted' if u.is_blacklisted else 'Active' }}</td>
+                    <td>
+                        {% if u.is_blacklisted %}
+                        <a href="{{ url_for('admin_unblacklist_user', user_id=u.id) }}" class="btn btn-sm btn-success">Unblacklist</a>
+                        {% else %}
+                        <a href="{{ url_for('admin_blacklist_user', user_id=u.id) }}" class="btn btn-sm btn-danger">Blacklist</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+    {% include 'staff_sidebar.html' %}
+    <div class="col-md-10 p-4">
+        <h3>Participants</h3>
+
+        <table class="table table-bordered table-hover mt-3">
+            <thead>
+                <tr>
+                    <th>User Name</th>
+                    <th>Email</th>
+                    <th>Trek Name</th>
+                    <th>Booking Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in participants %}
+                <tr>
+                    <td>{{ p.user.name }}</td>
+                    <td>{{ p.user.email }}</td>
+                    <td>{{ p.trek.name }}</td>
+                    <td>{{ p.booking_date.strftime('%d %b %Y') }}</td>
+                    <td>{{ p.status }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5" class="text-center text-muted">No participants yet</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

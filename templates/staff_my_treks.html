@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+    {% include 'staff_sidebar.html' %}
+    <div class="col-md-10 p-4">
+        <h3>My Treks</h3>
+        <p class="text-muted">You have multiple treks assigned. Choose one below to manage it.</p>
+
+        <table class="table table-bordered table-hover mt-3">
+            <thead>
+                <tr>
+                    <th>Trek Name</th>
+                    <th>Location</th>
+                    <th>Slots</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for t in my_treks %}
+                <tr>
+                    <td>{{ t.name }}</td>
+                    <td>{{ t.location }}</td>
+                    <td>{{ t.available_slots }}</td>
+                    <td>{{ t.status }}</td>
+                    <td><a href="{{ url_for('staff_manage_trek', trek_id=t.id) }}" class="btn btn-sm btn-primary">Manage</a></td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5" class="text-center text-muted">No trek assigned yet</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

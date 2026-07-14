@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+    {% include 'user_sidebar.html' %}
+    <div class="col-md-10 p-4">
+        <a href="{{ url_for('user_browse_treks') }}" class="btn btn-outline-secondary btn-sm mb-2">&larr; Back to Treks</a>
+
+        <div class="card mt-3" style="max-width: 700px;">
+            <div class="card-body">
+                <h3 class="card-title">{{ trek.name }}</h3>
+
+                <div class="row mt-3">
+                    <div class="col-md-4"><b>Location:</b> {{ trek.location }}</div>
+                    <div class="col-md-4"><b>Difficulty:</b> {{ trek.difficulty }}</div>
+                    <div class="col-md-4"><b>Duration:</b> {{ trek.duration_days }} Days</div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-4"><b>Start Date:</b> {{ trek.start_date.strftime('%d %b %Y') }}</div>
+                    <div class="col-md-4"><b>End Date:</b> {{ trek.end_date.strftime('%d %b %Y') }}</div>
+                    <div class="col-md-4"><b>Available Slots:</b> {{ trek.available_slots }}</div>
+                </div>
+
+                <h5 class="mt-4">Description</h5>
+                <p>{{ trek.description }}</p>
+
+                <a href="{{ url_for('user_book_trek', trek_id=trek.id) }}" class="btn btn-primary">Book Now</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row">
+    {% include 'staff_sidebar.html' %}
+
+    <div class="col-md-10">
+        <h3>{{ trek.name }}</h3>
+
+        <div class="row mt-3">
+            <div class="col-md-4"><b>Location:</b> {{ trek.location }}</div>
+            <div class="col-md-4"><b>Duration:</b> {{ trek.duration_days }} Days</div>
+            <div class="col-md-4"><b>Start Date:</b> {{ trek.start_date.strftime('%d %b %Y') }}</div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-4"><b>End Date:</b> {{ trek.end_date.strftime('%d %b %Y') }}</div>
+        </div>
+        <form method="POST" class="row mt-3">
+            <div class="col-md-4 mb-3">
+                <label>Available Slots</label>
+                <input type="number" name="available_slots" class="form-control" value="{{ trek.available_slots }}">
+            </div>
+            <div class="col-md-4 mb-3">
+                <label>Status</label>
+                <select name="status" class="form-control">
+                    {% for st in ['Approved', 'Open', 'Closed', 'Completed'] %}
+                    <option value="{{ st }}" {% if trek.status == st %}selected{% endif %}>{{ st }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-4 mb-3 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+        </form>
+
+        <h5 class="mt-4">Participants ({{ participants|length }})</h5>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>User Name</th>
+                    <th>Email</th>
+                    <th>Booking Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in participants %}
+                <tr>
+                    <td>{{ p.user.name }}</td>
+                    <td>{{ p.user.email }}</td>
+                    <td>{{ p.booking_date.strftime('%d %b %Y') }}</td>
+                    <td>{{ p.status }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ url_for('staff_update_trek_status', trek_id=trek.id, new_status='Open') }}" class="btn btn-outline-primary">Mark as Started</a>
+        <a href="{{ url_for('staff_update_trek_status', trek_id=trek.id, new_status='Completed') }}" class="btn btn-outline-success">Mark as Completed</a>
+    </div>
+</div>
+
+{% endblock %}
