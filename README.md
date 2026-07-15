@@ -19,8 +19,17 @@ A Flask-based web application for managing trekking activities, with three roles
 
 3. Run the application:
    ```
-   python app.py
+   python run.py
    ```
+
+   **Important:** Always run `run.py`, not `app.py` directly. Routes are split
+   into separate files under `routes/` (auth, admin, staff, user), and each of
+   them does `from app import app`. Running `app.py` directly would cause
+   Python to import it twice under two different module names (`__main__`
+   and `app`), creating two separate Flask app instances — one that actually
+   runs, and one where the routes got registered. This would make every page
+   return a 404. `run.py` avoids this by importing `app.py` only once, as the
+   `app` module.
 
 4. Open your browser and go to:
    ```
@@ -37,8 +46,14 @@ A Flask-based web application for managing trekking activities, with three roles
 
 ```
 trekking_app/
-├── app.py              # All Flask routes
+├── app.py              # Flask app setup, database init, admin seeding
+├── run.py              # Entry point — run this file to start the server
 ├── models.py           # Database models (User, Trek, Booking)
+├── routes/
+│   ├── auth.py         # Login, register, logout
+│   ├── admin.py        # Admin routes
+│   ├── staff.py        # Trek Staff routes
+│   └── user.py         # Trekker routes
 ├── templates/          # Jinja2 HTML templates
 └── instance/
     └── database.db     # SQLite database (auto-created on first run)
@@ -49,5 +64,5 @@ trekking_app/
 To start fresh (clear all data), delete the database file and restart the app:
 ```
 rm instance/database.db
-python app.py
+python run.py
 ```
